@@ -557,7 +557,7 @@
         <div class="mono muted">Project manager</div>
         <div class="toolbar-actions">
           <button id="changePasswordBtn" type="button" class="btn secondary">Change password</button>
-          <button id="saveAllBtn" type="button" class="btn secondary">Download projects.json</button>
+          <button id="saveAllBtn" type="button" class="btn secondary">Save changes</button>
           <button id="addProjectBtn" type="button" class="btn primary">Add project</button>
         </div>
       </div>
@@ -643,7 +643,9 @@
   <script src="projects-data.js"></script>
   <script>
     const DEFAULT_PASSWORD = '123Amb4.';
-    const PASSWORD_KEY = 'portfolioProjectsPassword';
+    let currentPassword = DEFAULT_PASSWORD;
+    let passwordFileHandle = null;
+    const PASSWORD_DATA_READY = loadPasswordData();
 
     const projectGrid = document.getElementById('projects');
     const projectEditor = document.getElementById('projectEditor');
@@ -664,8 +666,39 @@
     const passwordChangeError = document.getElementById('passwordChangeError');
     let editingProjectIndex = null;
 
+    async function loadPasswordData() {
+      try {
+        const response = await fetch('password.json', { cache: 'no-store' });
+        if (!response.ok) throw new Error('Unable to load password.json');
+        const data = await response.json();
+        if (typeof data.password === 'string' && data.password) currentPassword = data.password;
+      } catch (error) {
+      }
+    }
+
     function getPassword() {
-      return localStorage.getItem(PASSWORD_KEY) || DEFAULT_PASSWORD;
+      return currentPassword;
+    }
+
+    async function savePasswordFile(password) {
+      if (!window.showOpenFilePicker) {
+        throw new Error('Direct file saving is not supported by this browser.');
+      }
+
+      if (!passwordFileHandle) {
+        const handles = await window.showOpenFilePicker({
+          multiple: false,
+          types: [{
+            description: 'Password JSON file',
+            accept: { 'application/json': ['.json'] }
+          }]
+        });
+        passwordFileHandle = handles[0];
+      }
+
+      const writable = await passwordFileHandle.createWritable();
+      await writable.write(JSON.stringify({ password: password }, null, 2) + '\n');
+      await writable.close();
     }
 
     function openModal(modal) {
@@ -755,7 +788,7 @@
       saveProjects(projects);
       renderProjects();
       renderEditor();
-      setSaveStatus('Project removed. Download projects.json to keep the change.');
+      setSaveStatus('Project removed. Click Save changes to update projects.json.');
     }
 
     function saveProject(event) {
@@ -785,15 +818,21 @@
       renderProjects();
       renderEditor();
       closeModal(projectModal);
-      setSaveStatus('Project updated. Download projects.json to keep the change.');
+      setSaveStatus('Project updated. Click Save changes to update projects.json.');
     }
 
-    function saveAllChanges() {
+    async function saveAllChanges() {
       saveProjects(getProjects());
-      downloadProjectsFile(getProjects());
+      try {
+        await saveProjectsFile(getProjects());
+      } catch (error) {
+        if (error.name === 'AbortError') return;
+        setSaveStatus(error.message);
+        return;
+      }
       renderProjects();
       renderEditor();
-      setSaveStatus('projects.json downloaded. Replace the project file before deploying.');
+      setSaveStatus('projects.json updated successfully.');
     }
 
     addProjectBtn.addEventListener('click', addEmptyProject);
@@ -829,8 +868,9 @@
       });
     });
 
-    passwordChangeForm.addEventListener('submit', function (event) {
+    passwordChangeForm.addEventListener('submit', async function (event) {
       event.preventDefault();
+      await PASSWORD_DATA_READY;
       const formData = new FormData(passwordChangeForm);
       const currentPassword = String(formData.get('currentPassword') || '');
       const newPassword = String(formData.get('newPassword') || '');
@@ -847,9 +887,16 @@
         passwordChangeError.textContent = 'The new passwords do not match.';
         return;
       }
-      localStorage.setItem(PASSWORD_KEY, newPassword);
+      try {
+        await savePasswordFile(newPassword);
+      } catch (error) {
+        if (error.name === 'AbortError') return;
+        passwordChangeError.textContent = error.message;
+        return;
+      }
+      currentPassword = newPassword;
       closeModal(passwordModal);
-      setSaveStatus('Password updated.');
+      setSaveStatus('password.json updated successfully.');
     });
 
     function unlockPage() {
@@ -859,8 +906,9 @@
       passwordError.textContent = '';
     }
 
-    passwordForm.addEventListener('submit', function (event) {
+    passwordForm.addEventListener('submit', async function (event) {
       event.preventDefault();
+      await PASSWORD_DATA_READY;
       const enteredPassword = passwordInput.value.trim();
 
       if (enteredPassword === getPassword()) {
@@ -871,7 +919,7 @@
       }
     });
 
-    PROJECTS_DATA_READY.then(function () {
+    Promise.all([PROJECTS_DATA_READY, PASSWORD_DATA_READY]).then(function () {
       renderProjects();
       renderEditor();
     });

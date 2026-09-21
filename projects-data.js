@@ -88,16 +88,27 @@ function saveProjects(projects) {
   DEFAULT_PROJECTS = normaliseProjects(projects);
 }
 
-function downloadProjectsFile(projects) {
-  const file = new Blob([JSON.stringify(normaliseProjects(projects), null, 2) + '\n'], {
-    type: 'application/json'
-  });
-  const url = URL.createObjectURL(file);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = 'projects.json';
-  link.click();
-  URL.revokeObjectURL(url);
+let projectsFileHandle = null;
+
+async function saveProjectsFile(projects) {
+  if (!window.showOpenFilePicker) {
+    throw new Error('Direct file saving is not supported by this browser.');
+  }
+
+  if (!projectsFileHandle) {
+    const handles = await window.showOpenFilePicker({
+      multiple: false,
+      types: [{
+        description: 'Projects JSON file',
+        accept: { 'application/json': ['.json'] }
+      }]
+    });
+    projectsFileHandle = handles[0];
+  }
+
+  const writable = await projectsFileHandle.createWritable();
+  await writable.write(JSON.stringify(normaliseProjects(projects), null, 2) + '\n');
+  await writable.close();
 }
 
 function getProjectMarkup(project) {
