@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b0f14" />
+  <title>Upwork Projects | Abdul Moeez Bhatti</title>
+  <style>
+    :root {
+      --ink: #f5f7f4;
+      --muted: #9ca6a7;
+      --dim: #687375;
+      --bg: #0b0f14;
+      --panel: #11171c;
+      --panel-2: #161e23;
+      --line: rgba(236, 244, 241, .11);
+      --line-strong: rgba(236, 244, 241, .2);
+      --lime: #c7f36b;
+      --lime-soft: #20301c;
+      --orange: #ffab67;
+      --blue: #84b9ff;
+      --max: 1180px;
+      --mono: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      --sans: "Manrope", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 15px/1.65 var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body:before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .25;
+      background-image: linear-gradient(rgba(255,255,255,.024) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.024) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(to bottom, black, transparent 70%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    .wrap {
+      width: min(var(--max), calc(100% - 48px));
+      margin: 0 auto;
+      position: relative;
+    }
+    .mono {
+      font: 11px/1.5 var(--mono);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .muted { color: var(--muted); }
+    .accent { color: var(--lime); }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--line);
+      background: rgba(11, 15, 20, .82);
+      backdrop-filter: blur(18px);
+    }
+    .nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: -.03em;
+    }
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--lime);
+      color: var(--lime);
+      border-radius: 8px;
+      font: 13px var(--mono);
+    }
+
+    .page {
+      padding: 60px 0 80px;
+    }
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin: 8px 0 20px;
+      padding: 0 6px;
+    }
+    .toolbar .mono {
+      font-size: 11px;
+      letter-spacing: .18em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .toolbar .btn {
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      padding: 10px 16px;
+      background: rgba(255,255,255,.02);
+      color: var(--ink);
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 14px;
+      line-height: 1;
+    }
+    .toolbar .btn.primary {
+      background: var(--lime);
+      border-color: var(--lime);
+      color: var(--bg);
+      box-shadow: 0 8px 18px rgba(199, 243, 107, .15);
+    }
+
+    .project-editor {
+      display: grid;
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+    .project-editor-item {
+      display: grid;
+      grid-template-columns: 170px minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+      padding: 10px 0 14px;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+    .project-editor-header {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 12px;
+      padding-top: 10px;
+    }
+    .project-editor-header strong {
+      font-size: 18px;
+      letter-spacing: -.04em;
+      line-height: 1.1;
+      color: var(--ink);
+      font-weight: 800;
+    }
+    .project-editor-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .mini-btn {
+      appearance: none;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.02);
+      color: var(--ink);
+      border-radius: 6px;
+      padding: 8px 10px;
+      min-width: 36px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s ease;
+      line-height: 1;
+    }
+    .mini-btn:hover {
+      border-color: var(--lime);
+      color: var(--lime);
+    }
+    .mini-btn.danger {
+      border-color: rgba(255,255,255,.14);
+    }
+    .mini-btn.danger:hover {
+      border-color: rgba(255, 155, 155, .5);
+      color: #ffb0b0;
+    }
+
+    .project-editor-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 1.2fr 1.25fr 1.05fr 1.15fr;
+      gap: 10px 12px;
+      align-items: end;
+    }
+    .project-editor-grid label {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      min-width: 0;
+    }
+    .project-editor-grid label span {
+      color: var(--muted);
+      font: 11px var(--mono);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .project-editor-grid input,
+    .project-editor-grid textarea {
+      width: 100%;
+      background: rgba(255,255,255,.02);
+      border: 1px solid var(--line-strong);
+      border-radius: 6px;
+      padding: 9px 10px;
+      color: var(--ink);
+      font: 14px/1.4 var(--sans);
+      resize: vertical;
+      min-height: 38px;
+    }
+    .project-editor-grid textarea {
+      min-height: 38px;
+    }
+    .project-editor-grid input:focus,
+    .project-editor-grid textarea:focus {
+      outline: none;
+      border-color: var(--lime);
+      box-shadow: 0 0 0 1px rgba(199, 243, 107, .2);
+    }
+
+    .hero {
+      padding-bottom: 34px;
+    }
+    .role {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--lime);
+      margin-bottom: 24px;
+    }
+    .role .dot {
+      width: 7px;
+      height: 7px;
+      background: var(--lime);
+      border-radius: 50%;
+      box-shadow: 0 0 0 5px rgba(199, 243, 107, .1);
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(38px, 5vw, 66px);
+      line-height: 1.02;
+      letter-spacing: -.07em;
+      max-width: 720px;
+    }
+    .hero-sub {
+      max-width: 700px;
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 34px;
+    }
+    .project {
+      min-height: 300px;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--panel);
+      position: relative;
+      overflow: hidden;
+    }
+    .project:after {
+      content: "";
+      position: absolute;
+      width: 190px;
+      height: 190px;
+      right: -85px;
+      top: -85px;
+      border-radius: 50%;
+      border: 1px solid rgba(199, 243, 107, .18);
+      box-shadow: 0 0 0 25px rgba(199, 243, 107, .025), 0 0 0 50px rgba(199, 243, 107, .02);
+    }
+    .project:nth-child(2n) {
+      background: linear-gradient(145deg, #172119, #101716);
+    }
+    .project:nth-child(2n):after {
+      border-color: rgba(255, 171, 103, .2);
+    }
+    .project-type {
+      color: var(--lime);
+      margin-bottom: 40px;
+      position: relative;
+      z-index: 1;
+    }
+    .project:nth-child(2n) .project-type { color: var(--orange); }
+    .project h3 {
+      position: relative;
+      z-index: 1;
+      margin: 0 0 12px;
+      max-width: 360px;
+      font-size: clamp(24px, 2vw, 30px);
+      letter-spacing: -.06em;
+    }
+    .project p {
+      position: relative;
+      z-index: 1;
+      max-width: 420px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .tags {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 20px;
+    }
+    .tag {
+      padding: 5px 8px;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      color: var(--muted);
+      font: 10px var(--mono);
+    }
+
+    .password-overlay {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      background: rgba(11, 15, 20, 0.9);
+      backdrop-filter: blur(12px);
+      z-index: 50;
+      padding: 20px;
+    }
+    .password-card {
+      width: min(420px, 100%);
+      padding: 30px 26px;
+      border: 1px solid var(--line-strong);
+      background: var(--panel);
+      border-radius: 12px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, .35);
+    }
+    .password-card .eyebrow {
+      color: var(--lime);
+      margin-bottom: 12px;
+    }
+    .password-card h2 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      letter-spacing: -.05em;
+    }
+    .password-card p {
+      margin: 0 0 18px;
+      color: var(--muted);
+    }
+    .password-form {
+      display: grid;
+      gap: 12px;
+    }
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: rgba(255,255,255,.02);
+      color: var(--ink);
+      font: 15px var(--sans);
+    }
+    input[type="password"]:focus {
+      outline: 1px solid rgba(199, 243, 107, .4);
+      border-color: var(--lime);
+    }
+    .submit-btn {
+      border: 0;
+      border-radius: 8px;
+      padding: 12px 16px;
+      background: var(--lime);
+      color: var(--bg);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .error {
+      min-height: 18px;
+      color: #ff9b9b;
+      font-size: 12px;
+      margin-top: 3px;
+    }
+    .hidden { display: none !important; }
+
+    @media (max-width: 900px) {
+      .projects-grid { grid-template-columns: 1fr; }
+      .project-editor-item {
+        grid-template-columns: 1fr;
+      }
+      .project-editor-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 650px) {
+      .wrap { width: min(var(--max), calc(100% - 32px)); }
+      .nav { min-height: 68px; }
+      .page { padding-top: 36px; }
+      .project { min-height: 260px; }
+      .toolbar {
+        padding: 0;
+      }
+      .project-editor-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap nav">
+      <a class="brand" href="#" aria-label="Abdul Moeez Bhatti home">
+        <span class="brand-mark">AMB</span>
+        <span>Abdul Moeez <span class="accent">Bhatti</span></span>
+      </a>
+    </div>
+  </header>
+
+  <div id="passwordOverlay" class="password-overlay" aria-live="polite">
+    <div class="password-card">
+      <div class="eyebrow mono">Protected page</div>
+      <h2>Enter password</h2>
+      <p>This page is protected. Enter the password to view the Upwork project list.</p>
+      <form id="passwordForm" class="password-form" novalidate>
+        <input id="passwordInput" type="password" placeholder="Password" autocomplete="off" />
+        <button type="submit" class="submit-btn">Unlock</button>
+        <div id="passwordError" class="error" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+
+  <main id="mainContent" class="hidden">
+    <div class="wrap page">
+      <section class="hero">
+        <div class="role mono"><span class="dot"></span> CRM &amp; AI Automation Developer</div>
+        <h1>CRM Systems &amp; Workflow Automation</h1>
+        <p class="hero-sub">I build solutions that connect tools, automate operations, and help teams move faster with less manual work.</p>
+      </section>
+
+      <div class="toolbar">
+        <div class="mono muted">Project manager</div>
+        <button id="addProjectBtn" type="button" class="btn primary">Add project</button>
+      </div>
+
+      <section id="projectEditor" class="project-editor"></section>
+      <section id="projects" class="projects-grid" aria-live="polite"></section>
+    </div>
+  </main>
+
+  <script src="projects-data.js"></script>
+  <script>
+    const PASSWORD = '123Amb4.';
+
+    const projectGrid = document.getElementById('projects');
+    const projectEditor = document.getElementById('projectEditor');
+    const addProjectBtn = document.getElementById('addProjectBtn');
+    const passwordOverlay = document.getElementById('passwordOverlay');
+    const mainContent = document.getElementById('mainContent');
+    const passwordForm = document.getElementById('passwordForm');
+    const passwordInput = document.getElementById('passwordInput');
+    const passwordError = document.getElementById('passwordError');
+
+    function addEmptyProject() {
+      const projects = getProjects();
+      projects.push({
+        type: 'New project',
+        title: 'New project title',
+        description: 'Add project description here.',
+        link: '',
+        skills: ['Skill 1']
+      });
+      saveProjects(projects);
+      renderProjects();
+      renderEditor();
+    }
+
+    function renderEditor() {
+      const projects = getProjects();
+      projectEditor.innerHTML = projects.map(function (project, index) {
+        return `
+          <div class="project-editor-item">
+            <div class="project-editor-header">
+              <strong>Project ${index + 1}</strong>
+              <div class="project-editor-actions">
+                <button type="button" class="mini-btn" data-move="up" data-index="${index}" aria-label="Move project up">↑</button>
+                <button type="button" class="mini-btn" data-move="down" data-index="${index}" aria-label="Move project down">↓</button>
+                <button type="button" class="mini-btn danger" data-delete="${index}">Remove</button>
+              </div>
+            </div>
+            <div class="project-editor-grid">
+              <label>
+                <span>Type</span>
+                <input type="text" data-field="type" data-index="${index}" value="${escapeHtml(project.type || '')}" />
+              </label>
+              <label>
+                <span>Title</span>
+                <input type="text" data-field="title" data-index="${index}" value="${escapeHtml(project.title || '')}" />
+              </label>
+              <label>
+                <span>Description</span>
+                <textarea data-field="description" data-index="${index}">${escapeHtml(project.description || '')}</textarea>
+              </label>
+              <label>
+                <span>Upwork link</span>
+                <input type="url" data-field="link" data-index="${index}" value="${escapeHtml(project.link || '')}" />
+              </label>
+              <label>
+                <span>Skills (comma separated)</span>
+                <input type="text" data-field="skills" data-index="${index}" value="${escapeHtml((project.skills || []).join(', '))}" />
+              </label>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderProjects() {
+      const projects = getProjects();
+      projectGrid.innerHTML = projects.map(getProjectMarkup).join('');
+    }
+
+    function applyProjectChange(index, field, value) {
+      const projects = getProjects();
+      if (!projects[index]) return;
+
+      if (field === 'skills') {
+        projects[index].skills = value.split(',').map(function (skill) { return skill.trim(); }).filter(Boolean);
+      } else {
+        projects[index][field] = value;
+      }
+
+      saveProjects(projects);
+      renderProjects();
+    }
+
+    function moveProject(index, direction) {
+      const projects = getProjects();
+      const nextIndex = index + direction;
+      if (nextIndex < 0 || nextIndex >= projects.length) return;
+      const [item] = projects.splice(index, 1);
+      projects.splice(nextIndex, 0, item);
+      saveProjects(projects);
+      renderProjects();
+      renderEditor();
+    }
+
+    function deleteProject(index) {
+      const projects = getProjects();
+      if (projects.length <= 1) {
+        projects.splice(index, 1);
+        projects.push({
+          type: 'New project',
+          title: 'New project title',
+          description: 'Add project description here.',
+          link: '',
+          skills: ['Skill 1']
+        });
+      } else {
+        projects.splice(index, 1);
+      }
+      saveProjects(projects);
+      renderProjects();
+      renderEditor();
+    }
+
+    addProjectBtn.addEventListener('click', addEmptyProject);
+    projectEditor.addEventListener('input', function (event) {
+      const target = event.target;
+      if (!target.dataset.field) return;
+      const index = Number(target.dataset.index);
+      const field = target.dataset.field;
+      applyProjectChange(index, field, target.value);
+    });
+    projectEditor.addEventListener('click', function (event) {
+      const target = event.target;
+      if (!target.dataset.delete && !target.dataset.move) return;
+      const index = Number(target.dataset.index);
+      if (target.dataset.delete !== undefined) {
+        deleteProject(index);
+      }
+      if (target.dataset.move) {
+        const direction = target.dataset.move === 'up' ? -1 : 1;
+        moveProject(index, direction);
+      }
+    });
+
+    function unlockPage() {
+      passwordOverlay.classList.add('hidden');
+      mainContent.classList.remove('hidden');
+      passwordInput.value = '';
+      passwordError.textContent = '';
+    }
+
+    passwordForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const enteredPassword = passwordInput.value.trim();
+
+      if (enteredPassword === PASSWORD) {
+        unlockPage();
+      } else {
+        passwordError.textContent = 'Incorrect password. Please try again.';
+        passwordInput.focus();
+      }
+    });
+
+    renderProjects();
+    renderEditor();
+  </script>
+</body>
+</html>

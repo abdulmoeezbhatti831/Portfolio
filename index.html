@@ -1539,6 +1539,7 @@
     <div class="wrap footer-inner"><span>© <span id="year">2026</span> Abdul Moeez Bhatti</span><span class="mono">CRM ·
         AI automation · integrations</span></div>
   </footer>
+  <script src="projects-data.js"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
   <script>
     (function () {
@@ -1579,6 +1580,19 @@
         });
         card.addEventListener('pointerleave', function () { card.style.transform = ''; });
       });
+    }());
+  </script>
+  <script>
+    (function () {
+      const PROJECTS_CONTAINER = document.querySelector('.projects-grid');
+      if (!PROJECTS_CONTAINER) return;
+
+      function renderProjects() {
+        const projects = getProjects();
+        PROJECTS_CONTAINER.innerHTML = projects.map(getProjectMarkup).join('');
+      }
+
+      renderProjects();
     }());
   </script>
 </body>
