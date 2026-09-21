@@ -1539,7 +1539,6 @@
     <div class="wrap footer-inner"><span>© <span id="year">2026</span> Abdul Moeez Bhatti</span><span class="mono">CRM ·
         AI automation · integrations</span></div>
   </footer>
-  <script src="projects-data.js"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
   <script>
     (function () {
@@ -1587,14 +1586,35 @@
       const PROJECTS_CONTAINER = document.querySelector('.projects-grid');
       if (!PROJECTS_CONTAINER) return;
 
-      function renderProjects() {
-        const projects = getProjects();
+      function renderProjects(projects) {
         const projectsSection = PROJECTS_CONTAINER.closest('#work');
         projectsSection.hidden = projects.length === 0;
-        PROJECTS_CONTAINER.innerHTML = projects.map(getProjectMarkup).join('');
+        PROJECTS_CONTAINER.innerHTML = projects.map(function (project) {
+          const skills = Array.isArray(project.skills) ? project.skills : [];
+          return '<article class="project">' +
+            '<div>' +
+            '<div class="project-type mono">' + project.type + '</div>' +
+            '<h3>' + project.title + '</h3>' +
+            '<p>' + project.description + '</p>' +
+            '<div class="tags">' + skills.map(function (skill) {
+              return '<span class="tag">' + skill + '</span>';
+            }).join('') + '</div>' +
+            '</div>' +
+            '<a class="project-link" href="' + project.link + '" target="_blank" rel="noopener noreferrer">' +
+            'View project on Upwork <span class="arrow">↗</span></a>' +
+            '</article>';
+        }).join('');
       }
 
-      PROJECTS_DATA_READY.then(renderProjects);
+      fetch('projects.json')
+        .then(function (response) {
+          if (!response.ok) throw new Error('Unable to load projects.json');
+          return response.json();
+        })
+        .then(renderProjects)
+        .catch(function () {
+          renderProjects([]);
+        });
     }());
   </script>
 </body>
