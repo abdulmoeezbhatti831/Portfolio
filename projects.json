@@ -1,31 +1,30 @@
 [
   {
-    "type": "CRM systems",
-    "title": "From lead capture to closed loop.",
-    "description": "CRM workflows and Deluge automation that keep records useful, follow-ups timely, and teams aligned.",
-    "link": "https://www.upwork.com/freelancers/~016e9081f4be32f84?p=2093971224366964736",
-    "skills": ["Zoho CRM", "Deluge", "Workflows"]
+    "type": "n8n Automation Developer",
+    "title": "AI Chatbot, Lead Capture, Mailchimp & n8n Automation",
+    "description": "Built an end-to-end automation system using n8n, Tawk AI, WooCommerce, Mailchimp, WordPress, and Google Workspace. Optimized the AI chatbot for faster responses, implemented reliable lead capture with Mailchimp integration, automated inquiry acknowledgements and AI email drafting, and designed a scalable abandoned cart recovery workflow using n8n Data Tables instead of Wait nodes. Delivered a fast, reliable solution that streamlined customer support, lead management, and email automation.",
+    "link": "https://www.upwork.com/freelancers/~016e9081f4be32f849?p=2100480503675142144",
+    "skills": ["AI Automation", "API Integration", "n8n", "Chatbot Development", "Lead Capture"]
   },
   {
-    "type": "AI automation",
-    "title": "Less manual work. More momentum.",
-    "description": "Multi-step automations that connect AI services, business logic, and notifications into a dependable operating rhythm.",
+    "type": "Zoho Automation & Deluge Scripting Developer",
+    "title": "Shopify & Zoho Clinical Workflow Automation",
+    "description": "Built an end-to-end Shopify + Zoho system to automate OTC applications, prescription requests, clinical reviews, prescription signing, and product access. Integrated Shopify, Zoho CRM, Forms, Writer, and Sign with automated doctor workflows, PDF generation, notifications, form prefilling, and further-information processes. 90% of the automation and business logic was developed using Zoho Deluge scripting, including Shopify tag-based access using OTC and Open Prescription tags.",
     "link": "https://www.upwork.com/freelancers/~016e9081f4be32f84?p=2093965981694865408",
-    "skills": ["n8n", "AI", "Webhooks"]
+    "skills": ["Shopify Development", "DevOps Engineering", "Automated Workflow", "Zoho CRM", "Customer Development"]
   },
   {
-    "type": "API integrations",
-    "title": "Make every tool speak clearly.",
-    "description": "Reliable data exchange between CRMs and external systems through clean API design, JSON, and webhooks.",
-    "link": "https://www.upwork.com/freelancers/~016e9081f4be32f84?p=2079493673282576384",
-    "skills": ["REST APIs", "JSON", "Webhooks"]
+    "type": "CRM & Automation Developer | Brevo CRM, Zapier",
+    "title": "Brevo CRM Customer Journey & Multi-Platform Automation",
+    "description": "Built an end-to-end customer journey connecting Perspective.io, ThriveCart, and Brevo CRM using Zapier. Automated the flow from funnel entry and course purchase through buyer and non-buyer follow-ups. Integrated ThriveCart purchasing data with Brevo and configured automated follow-up sequences to engage customers based on their purchase status, creating a streamlined customer journey with minimal manual work.",
+    "link": "https://www.upwork.com/freelancers/~016e9081f4be32f849?p=2101935669048365056",
+    "skills": ["CRM Automation", "Zapier", "Cadence Platform", "Project Workflows", "Customer Relationship Management"]
   },
   {
-    "type": "Process automation",
-    "title": "Replace handoffs with systems.",
-    "description": "End-to-end business process automations that reduce repetitive tasks and make operations easier to manage.",
-    "link": "https://www.upwork.com/freelancers/~016e9081f4be32f84?p=2068720182072082432",
-    "skills": ["n8n", "Zapier", "Zoho"]
+    "type": "Make.com Automation & Integration Developer",
+    "title": "Workiz Job Automation & Google Sheets Integration",
+    "description": "Built an automated Workiz-to-Google Sheets integration using Make.com to capture newly created jobs and send their data to Google Sheets according to the client’s requirements. Since Make.com did not provide an instant trigger for newly created Workiz jobs, implemented a custom webhook-based trigger using Workiz automation. This enabled real-time job data transmission from Workiz to Make.com and automated record creation in Google Sheets whenever a new job was created.",
+    "link": "https://www.upwork.com/freelancers/~016e9081f4be32f849?p=2101925666006618112",
+    "skills": ["Make.com", "Web API", "Data Integration", "API Integration", "Google Sheets Automation"]
   }
 ]
-    
