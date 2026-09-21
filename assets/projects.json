@@ -26,12 +26,5 @@
     "description": "Built an automated Workiz-to-Google Sheets integration using Make.com to capture newly created jobs and send their data to Google Sheets according to the client’s requirements. Since Make.com did not provide an instant trigger for newly created Workiz jobs, implemented a custom webhook-based trigger using Workiz automation. This enabled real-time job data transmission to Make.com and automated record creation in Google Sheets whenever a new job was created.",
     "link": "https://www.upwork.com/freelancers/~016e9081f4be32f849?p=2101925666006618112",
     "skills": ["Make.com", "Web API", "Data Integration", "API Integration", "Google Sheets Automation"]
-  },
-  {
-    "type": "Make.com Automation & Integration Developer",
-    "title": "Workiz Job Automation & Google Sheets Integration",
-    "description": "Built an automated Workiz-to-Google Sheets integration using Make.com to capture newly created jobs and send their data to Google Sheets according to the client’s requirements. Since Make.com did not provide an instant trigger for newly created Workiz jobs, implemented a custom webhook-based trigger using Workiz automation. This enabled real-time job data transmission to Make.com and automated record creation in Google Sheets whenever a new job was created.",
-    "link": "https://www.upwork.com/freelancers/~016e9081f4be32f849?p=2101925666006618112",
-    "skills": ["Make.com", "Web API", "Data Integration", "API Integration", "Google Sheets Automation"]
   }
 ]
