@@ -1405,7 +1405,7 @@
         </div>
       </div>
     </section>
-    <section class="section" id="work">
+    <section class="section" id="work" hidden>
       <div class="wrap">
         <div class="section-head">
           <div>
@@ -1589,10 +1589,12 @@
 
       function renderProjects() {
         const projects = getProjects();
+        const projectsSection = PROJECTS_CONTAINER.closest('#work');
+        projectsSection.hidden = projects.length === 0;
         PROJECTS_CONTAINER.innerHTML = projects.map(getProjectMarkup).join('');
       }
 
-      renderProjects();
+      PROJECTS_DATA_READY.then(renderProjects);
     }());
   </script>
 </body>

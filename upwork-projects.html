@@ -557,7 +557,7 @@
         <div class="mono muted">Project manager</div>
         <div class="toolbar-actions">
           <button id="changePasswordBtn" type="button" class="btn secondary">Change password</button>
-          <button id="saveAllBtn" type="button" class="btn secondary">Save changes</button>
+          <button id="saveAllBtn" type="button" class="btn secondary">Download projects.json</button>
           <button id="addProjectBtn" type="button" class="btn primary">Add project</button>
         </div>
       </div>
@@ -755,7 +755,7 @@
       saveProjects(projects);
       renderProjects();
       renderEditor();
-      setSaveStatus('Project removed.');
+      setSaveStatus('Project removed. Download projects.json to keep the change.');
     }
 
     function saveProject(event) {
@@ -785,14 +785,15 @@
       renderProjects();
       renderEditor();
       closeModal(projectModal);
-      setSaveStatus('Project saved.');
+      setSaveStatus('Project updated. Download projects.json to keep the change.');
     }
 
     function saveAllChanges() {
       saveProjects(getProjects());
+      downloadProjectsFile(getProjects());
       renderProjects();
       renderEditor();
-      setSaveStatus('All changes saved and the portfolio view is up to date.');
+      setSaveStatus('projects.json downloaded. Replace the project file before deploying.');
     }
 
     addProjectBtn.addEventListener('click', addEmptyProject);
@@ -870,8 +871,10 @@
       }
     });
 
-    renderProjects();
-    renderEditor();
+    PROJECTS_DATA_READY.then(function () {
+      renderProjects();
+      renderEditor();
+    });
   </script>
 </body>
 </html>

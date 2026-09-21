@@ -1,6 +1,4 @@
-const PORTFOLIO_PROJECTS_KEY = 'portfolioProjects';
-
-const DEFAULT_PROJECTS = [
+let DEFAULT_PROJECTS = [
   {
     type: 'CRM systems',
     title: 'From lead capture to closed loop.',
@@ -30,6 +28,18 @@ const DEFAULT_PROJECTS = [
     skills: ['n8n', 'Zapier', 'Zoho']
   }
 ];
+
+const PROJECTS_DATA_READY = loadProjectsData();
+
+async function loadProjectsData() {
+  try {
+    const response = await fetch('projects.json', { cache: 'no-store' });
+    if (!response.ok) throw new Error('Unable to load projects.json');
+    const projects = await response.json();
+    if (Array.isArray(projects)) DEFAULT_PROJECTS = projects;
+  } catch (error) {
+  }
+}
 
 function escapeHtml(value) {
   return String(value ?? '').replace(/[&<>"']/g, function (char) {
@@ -71,20 +81,23 @@ function normaliseProjects(projects) {
 }
 
 function getProjects() {
-  try {
-    const stored = localStorage.getItem(PORTFOLIO_PROJECTS_KEY);
-    if (!stored) {
-      return normaliseProjects(DEFAULT_PROJECTS);
-    }
-
-    return normaliseProjects(JSON.parse(stored));
-  } catch (error) {
-    return normaliseProjects(DEFAULT_PROJECTS);
-  }
+  return normaliseProjects(DEFAULT_PROJECTS);
 }
 
 function saveProjects(projects) {
-  localStorage.setItem(PORTFOLIO_PROJECTS_KEY, JSON.stringify(normaliseProjects(projects)));
+  DEFAULT_PROJECTS = normaliseProjects(projects);
+}
+
+function downloadProjectsFile(projects) {
+  const file = new Blob([JSON.stringify(normaliseProjects(projects), null, 2) + '\n'], {
+    type: 'application/json'
+  });
+  const url = URL.createObjectURL(file);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'projects.json';
+  link.click();
+  URL.revokeObjectURL(url);
 }
 
 function getProjectMarkup(project) {
