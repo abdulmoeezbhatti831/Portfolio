@@ -1415,53 +1415,6 @@
           <p class="section-intro">A selection of completed systems and workflows built for better business operations.</p>
         </div>
         <div class="projects-grid">
-          <article class="project">
-            <div>
-              <div class="project-type mono">CRM systems</div>
-              <h3>From lead capture to closed loop.</h3>
-              <p>CRM workflows and Deluge automation that keep records useful, follow-ups timely, and teams aligned.</p>
-              <div class="tags"><span class="tag">Zoho CRM</span><span class="tag">Deluge</span><span
-                  class="tag">Workflows</span></div>
-            </div><a class="project-link"
-              href="https://www.upwork.com/freelancers/~016e9081f4be32f84?p=2093971224366964736" target="_blank"
-              rel="noopener noreferrer">View project on Upwork <span class="arrow">↗</span></a>
-          </article>
-          <article class="project">
-            <div>
-              <div class="project-type mono">AI automation</div>
-              <h3>Less manual work. More momentum.</h3>
-              <p>Multi-step automations that connect AI services, business logic, and notifications into a dependable
-                operating rhythm.</p>
-              <div class="tags"><span class="tag">n8n</span><span class="tag">AI</span><span class="tag">Webhooks</span>
-              </div>
-            </div><a class="project-link"
-              href="https://www.upwork.com/freelancers/~016e9081f4be32f84?p=2093965981694865408" target="_blank"
-              rel="noopener noreferrer">View project on Upwork <span class="arrow">↗</span></a>
-          </article>
-          <article class="project">
-            <div>
-              <div class="project-type mono">API integrations</div>
-              <h3>Make every tool speak clearly.</h3>
-              <p>Reliable data exchange between CRMs and external systems through clean API design, JSON, and webhooks.
-              </p>
-              <div class="tags"><span class="tag">REST APIs</span><span class="tag">JSON</span><span
-                  class="tag">Webhooks</span></div>
-            </div><a class="project-link"
-              href="https://www.upwork.com/freelancers/~016e9081f4be32f84?p=2079493673282576384" target="_blank"
-              rel="noopener noreferrer">View project on Upwork <span class="arrow">↗</span></a>
-          </article>
-          <article class="project">
-            <div>
-              <div class="project-type mono">Process automation</div>
-              <h3>Replace handoffs with systems.</h3>
-              <p>End-to-end business process automations that reduce repetitive tasks and make operations easier to
-                manage.</p>
-              <div class="tags"><span class="tag">n8n</span><span class="tag">Zapier</span><span class="tag">Zoho</span>
-              </div>
-            </div><a class="project-link"
-              href="https://www.upwork.com/freelancers/~016e9081f4be32f84?p=2068720182072082432" target="_blank"
-              rel="noopener noreferrer">View project on Upwork <span class="arrow">↗</span></a>
-          </article>
         </div>
       </div>
     </section>
@@ -1606,9 +1559,9 @@
         }).join('');
       }
 
-      fetch('projects.json')
+      fetch('assets/projects.json')
         .then(function (response) {
-          if (!response.ok) throw new Error('Unable to load projects.json');
+          if (!response.ok) throw new Error('Unable to load assets/projects.json');
           return response.json();
         })
         .then(renderProjects)
